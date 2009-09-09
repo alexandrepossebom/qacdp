@@ -22,7 +22,6 @@ void MainWindow::send()
     bool ok = true;
     QString horas = ui->hoursLineEdit->text();
     int h = horas.toInt(&ok);
-    qDebug() << h ;
     if(!ok || h < 1 || h > 24){
         msgBox->setText("Invalid Hours field");
         msgBox->setIcon(QMessageBox::Warning);
