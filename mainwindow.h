@@ -23,6 +23,7 @@ public slots:
 private slots:
     void send();
     void clear();
+    void clearDay();
     void refresh(int year,int month);
 private:
     Ui::MainWindow *ui;

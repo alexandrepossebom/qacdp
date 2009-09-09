@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     connect(ui->sendButton,SIGNAL(clicked()),this,SLOT(send()));
     connect(ui->clearButton,SIGNAL(clicked()),this,SLOT(clear()));
+    connect(ui->clearDayButton,SIGNAL(clicked()),this,SLOT(clearDay()));
     connect(ui->calendarWidget,SIGNAL(currentPageChanged(int,int)),this,SLOT(refresh(int,int)));
 }
 
@@ -61,6 +62,25 @@ void MainWindow::login()
 
     if(userName.size() > 0 && pass.size() > 0)
         acdp.login(userName,pass,ui->nomeLabel,ui->projectBox,ui->webView,ui->calendarWidget,msgBox);
+}
+
+void MainWindow::clearDay()
+{
+
+    msgBox->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox->setText("Remove all entries for thi day ?");
+    switch (msgBox->exec()) {
+    case QMessageBox::Yes:
+        acdp.clearDay();
+        break;
+    case QMessageBox::No:
+        // no was clicked
+        break;
+    default:
+        // should never be reached
+        break;
+    }
+
 }
 
 void MainWindow::clear()

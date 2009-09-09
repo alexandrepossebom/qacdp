@@ -13,6 +13,7 @@ ACDP::ACDP()
             this, SLOT(readResponseHeader(const QHttpResponseHeader &)));
     connect(&httpProjetos,SIGNAL(done(bool)),this,SLOT(projetosDone(bool)));
     connect(&httpSend,SIGNAL(done(bool)),this,SLOT(sendDone(bool)));
+    connect(&httpClear,SIGNAL(done(bool)),this,SLOT(clearDone(bool)));
 }
 
 void ACDP::login(QString user,QString passwd,QLabel *nomeLabel, QComboBox *projectBox, QWebView *webview, QCalendarWidget *calendar,QMessageBox *msgBox)
@@ -217,4 +218,53 @@ void ACDP::sendDone(bool error)
     } else {
         webRefresh();
     }
+}
+
+void ACDP::clearDay()
+{
+    QDate date = calendar->selectedDate();
+
+    QByteArray content = "http://ep.conectiva/acdp/";
+
+    content.append("horas_projeto.php?action=remove_all&year=");
+
+
+    content.append(QString::number(date.year()));
+    content.append("&day=");
+    if(QString::number(date.day()).size() == 1)
+    {
+        content.append("0");
+        content.append(QString::number(date.day()));
+    }else{
+        content.append(QString::number(date.day()));
+    }
+    content.append("&month=");
+    if(QString::number(date.month()).size() == 1)
+    {
+        content.append("0");
+        content.append(QString::number(date.month()));
+    }else{
+        content.append(QString::number(date.month()));
+    }
+
+    content.append("&");
+    content.append("person_id=");
+    content.append(id);
+    content.append("&");
+    content.append(session);
+
+
+    QHttpRequestHeader header("POST", content);
+    header.setValue("Host", "ep.conectiva");
+    header.setContentType("application/x-www-form-urlencoded");
+    header.setContentLength(content.length());
+
+    httpClear.setHost("ep.conectiva");
+    httpClear.request(header, content);
+}
+
+void ACDP::clearDone(bool error)
+{
+    if (!error)
+        webRefresh();
 }

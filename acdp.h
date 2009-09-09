@@ -19,6 +19,7 @@ class ACDP : public QObject
     QHttp httpLogin;
     QHttp httpProjetos;
     QHttp httpSend;
+    QHttp httpClear;
     QString session;
     QDomDocument dom;
     QComboBox *projectBox;
@@ -37,12 +38,14 @@ public:
                QWebView *webview,QCalendarWidget *calendar, QMessageBox *msgBox);
     void send(QString project_id,QString horas,QString description);
     void webRefresh();
+    void clearDay();
 
 private slots:
     bool loginDone(bool);
     void readResponseHeader(const QHttpResponseHeader&);
     void projetosDone(bool);
     void sendDone(bool);
+    void clearDone(bool);
 
 };
 
