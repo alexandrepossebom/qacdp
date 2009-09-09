@@ -20,6 +20,7 @@ public slots:
     void login();
 private slots:
     void send();
+    void clear();
     void refresh(int year,int month);
 private:
     Ui::MainWindow *ui;

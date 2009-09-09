@@ -63,14 +63,14 @@
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
     <value type="QString" >BROWSER=/usr/bin/www-browser</value>
     <value type="QString" >CANBERRA_DRIVER=pulse</value>
-    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-NpGUVXpVi4,guid=53a1f1705caf62e79be4e2ea4aa0f4d4</value>
+    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-V0VvNaoI8I,guid=ea1f154a1cafea7a07e6f7b04aa79fe7</value>
     <value type="QString" >DESKTOP_SESSION=01KDE4</value>
     <value type="QString" >DESKTOP_STARTUP_ID=</value>
     <value type="QString" >DISPLAY=:0.0</value>
     <value type="QString" >DM_CONTROL=/var/run/xdmctl</value>
     <value type="QString" >EDITOR=vim</value>
     <value type="QString" >GCONF_TMPDIR=/tmp</value>
-    <value type="QString" >GPG_AGENT_INFO=/home/alexandre/.gnupg/S.gpg-agent:1634:1</value>
+    <value type="QString" >GPG_AGENT_INFO=/home/alexandre/.gnupg/S.gpg-agent:1204:1</value>
     <value type="QString" >GREP_COLOR=1;32</value>
     <value type="QString" >GREP_OPTIONS=--color=auto</value>
     <value type="QString" >GS_LIB=/home/alexandre/.fonts</value>
@@ -132,7 +132,7 @@
     <value type="QString" >QT_PLUGIN_PATH=/home/alexandre/.kde4/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
     <value type="QString" >QT_XFT=0</value>
     <value type="QString" >SCREENDIR=/home/alexandre/tmp</value>
-    <value type="QString" >SESSION_MANAGER=local/localhost:@/tmp/.ICE-unix/2826,unix/localhost:/tmp/.ICE-unix/2826</value>
+    <value type="QString" >SESSION_MANAGER=local/localhost:@/tmp/.ICE-unix/2786,unix/localhost:/tmp/.ICE-unix/2786</value>
     <value type="QString" >SHELL=/bin/bash</value>
     <value type="QString" >SHLVL=1</value>
     <value type="QString" >TMP=/tmp/</value>
@@ -143,7 +143,7 @@
     <value type="QString" >XDG_CONFIG_DIRS=/etc/xdg:/etc/xdg/kde4</value>
     <value type="QString" >XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
     <value type="QString" >XDG_MENU_PREFIX=kde-</value>
-    <value type="QString" >XDG_SESSION_COOKIE=d111056ba048c661e6ae41eb4a9565cc-1252062415.915728-413095533</value>
+    <value type="QString" >XDG_SESSION_COOKIE=d111056ba048c661e6ae41eb4a9565cc-1252499430.361989-1405770012</value>
     <value type="QString" >XDM_MANAGED=method=classic,auto</value>
     <value type="QString" >XMODIFIERS=@im=none</value>
     <value type="QString" >_=/usr/bin/kdeinit4</value>
@@ -156,7 +156,7 @@
     <value type="QString" >CONFIG+=debug</value>
    </valuelist>
    <value key="abstractProcess.command" type="QString" >/usr/bin/qmake</value>
-   <value key="abstractProcess.enabled" type="bool" >false</value>
+   <value key="abstractProcess.enabled" type="bool" >true</value>
    <value key="abstractProcess.workingDirectory" type="QString" >/home/alexandre/qacdp</value>
    <value key="buildConfiguration" type="int" >2</value>
   </valuemap>
@@ -168,14 +168,14 @@
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
     <value type="QString" >BROWSER=/usr/bin/www-browser</value>
     <value type="QString" >CANBERRA_DRIVER=pulse</value>
-    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-NpGUVXpVi4,guid=53a1f1705caf62e79be4e2ea4aa0f4d4</value>
+    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-V0VvNaoI8I,guid=ea1f154a1cafea7a07e6f7b04aa79fe7</value>
     <value type="QString" >DESKTOP_SESSION=01KDE4</value>
     <value type="QString" >DESKTOP_STARTUP_ID=</value>
     <value type="QString" >DISPLAY=:0.0</value>
     <value type="QString" >DM_CONTROL=/var/run/xdmctl</value>
     <value type="QString" >EDITOR=vim</value>
     <value type="QString" >GCONF_TMPDIR=/tmp</value>
-    <value type="QString" >GPG_AGENT_INFO=/home/alexandre/.gnupg/S.gpg-agent:1634:1</value>
+    <value type="QString" >GPG_AGENT_INFO=/home/alexandre/.gnupg/S.gpg-agent:1204:1</value>
     <value type="QString" >GREP_COLOR=1;32</value>
     <value type="QString" >GREP_OPTIONS=--color=auto</value>
     <value type="QString" >GS_LIB=/home/alexandre/.fonts</value>
@@ -237,7 +237,7 @@
     <value type="QString" >QT_PLUGIN_PATH=/home/alexandre/.kde4/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
     <value type="QString" >QT_XFT=0</value>
     <value type="QString" >SCREENDIR=/home/alexandre/tmp</value>
-    <value type="QString" >SESSION_MANAGER=local/localhost:@/tmp/.ICE-unix/2826,unix/localhost:/tmp/.ICE-unix/2826</value>
+    <value type="QString" >SESSION_MANAGER=local/localhost:@/tmp/.ICE-unix/2786,unix/localhost:/tmp/.ICE-unix/2786</value>
     <value type="QString" >SHELL=/bin/bash</value>
     <value type="QString" >SHLVL=1</value>
     <value type="QString" >TMP=/tmp/</value>
@@ -248,7 +248,7 @@
     <value type="QString" >XDG_CONFIG_DIRS=/etc/xdg:/etc/xdg/kde4</value>
     <value type="QString" >XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
     <value type="QString" >XDG_MENU_PREFIX=kde-</value>
-    <value type="QString" >XDG_SESSION_COOKIE=d111056ba048c661e6ae41eb4a9565cc-1252062415.915728-413095533</value>
+    <value type="QString" >XDG_SESSION_COOKIE=d111056ba048c661e6ae41eb4a9565cc-1252499430.361989-1405770012</value>
     <value type="QString" >XDM_MANAGED=method=classic,auto</value>
     <value type="QString" >XMODIFIERS=@im=none</value>
     <value type="QString" >_=/usr/bin/kdeinit4</value>

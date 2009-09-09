@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     connect(ui->sendButton,SIGNAL(clicked()),this,SLOT(send()));
+    connect(ui->clearButton,SIGNAL(clicked()),this,SLOT(clear()));
     connect(ui->calendarWidget,SIGNAL(currentPageChanged(int,int)),this,SLOT(refresh(int,int)));
 }
 
@@ -51,4 +52,8 @@ void MainWindow::login()
         acdp.login(userName,pass,ui->nomeLabel,ui->projectBox,ui->webView,ui->calendarWidget);
 }
 
-
+void MainWindow::clear()
+{
+    ui->hoursLineEdit->clear();
+    ui->descriptionEdit->clear();
+}
