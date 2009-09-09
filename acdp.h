@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QCalendarWidget>
 #include <QWebView>
+#include <QMessageBox>
 
 
 class ACDP : public QObject
@@ -26,10 +27,14 @@ class ACDP : public QObject
     QLabel *nomeLabel;
     QWebView *webview;
     QCalendarWidget *calendar;
+    QMessageBox *msgBox;
+
+
 
 public:
     ACDP();
-    void login(QString user, QString passwd, QLabel *nomeLabel, QComboBox *projectBox, QWebView *webview,QCalendarWidget *calendar);
+    void login(QString user, QString passwd, QLabel *nomeLabel, QComboBox *projectBox,
+               QWebView *webview,QCalendarWidget *calendar, QMessageBox *msgBox);
     void send(QString project_id,QString horas,QString description);
     void webRefresh();
 

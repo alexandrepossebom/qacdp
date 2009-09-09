@@ -9,6 +9,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
+    msgBox = new QMessageBox;
     ui->setupUi(this);
     connect(ui->sendButton,SIGNAL(clicked()),this,SLOT(send()));
     connect(ui->clearButton,SIGNAL(clicked()),this,SLOT(clear()));
@@ -21,8 +22,6 @@ void MainWindow::send()
     QString projectId = ui->projectBox->itemData(ui->projectBox->currentIndex()).toString();
     QString description = ui->descriptionEdit->toPlainText();
     acdp.send(projectId,horas,description);
-
-
 }
 
 void MainWindow::refresh(int year,int month)
@@ -49,7 +48,7 @@ void MainWindow::login()
     QString pass = l.pass();
 
     if(userName.size() > 0 && pass.size() > 0)
-        acdp.login(userName,pass,ui->nomeLabel,ui->projectBox,ui->webView,ui->calendarWidget);
+        acdp.login(userName,pass,ui->nomeLabel,ui->projectBox,ui->webView,ui->calendarWidget,msgBox);
 }
 
 void MainWindow::clear()

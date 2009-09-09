@@ -3,6 +3,7 @@
 #include <QUrl>
 #include <QDate>
 #include <QTimer>
+#include <QRegExp>
 
 ACDP::ACDP()
 {
@@ -14,7 +15,7 @@ ACDP::ACDP()
     connect(&httpSend,SIGNAL(done(bool)),this,SLOT(sendDone(bool)));
 }
 
-void ACDP::login(QString user,QString passwd,QLabel *nomeLabel, QComboBox *projectBox, QWebView *webview, QCalendarWidget *calendar)
+void ACDP::login(QString user,QString passwd,QLabel *nomeLabel, QComboBox *projectBox, QWebView *webview, QCalendarWidget *calendar,QMessageBox *msgBox)
 {
     this->user = user;
     this->passwd = passwd;
@@ -22,6 +23,7 @@ void ACDP::login(QString user,QString passwd,QLabel *nomeLabel, QComboBox *proje
     this->nomeLabel = nomeLabel;
     this->webview = webview;
     this->calendar = calendar;
+    this->msgBox = msgBox;
 
     QByteArray content = "";
     content.append("action=login&GoAheadAndLogIn=Login&user=");
@@ -41,7 +43,7 @@ void ACDP::login(QString user,QString passwd,QLabel *nomeLabel, QComboBox *proje
 
 bool ACDP::loginDone(bool error)
 {
-    if(!error && projectBox){
+    if(!error){
         QByteArray content = "";
         content.append("xml=true");
         content.append("&");
@@ -89,6 +91,13 @@ void ACDP::projetosDone(bool error)
 void ACDP::readResponseHeader(const QHttpResponseHeader &responseHeader)
 {
     session = responseHeader.value("set-cookie").section(";",0,0);
+    if( responseHeader.toString().indexOf("location") == -1 )
+    {
+        msgBox->setIcon(QMessageBox::Warning);
+        msgBox->setText("Invalid user or password");
+        msgBox->setStandardButtons(QMessageBox::Ok);
+        msgBox->exec();
+    }
 }
 
 void ACDP::send(QString project_id,QString horas,QString description)
@@ -188,6 +197,24 @@ void ACDP::webRefresh()
 }
 
 void ACDP::sendDone(bool error)
-{  
-    webRefresh();
+{
+    QString data = httpSend.readAll();
+    QString errorStr;
+    if(!error && data.indexOf("errormini") > 0 )
+    {
+        QRegExp rx;
+        QString company, web, country;
+        rx.setPattern("errormini.>(.*)</span>");
+        if (rx.indexIn(data) != -1) {
+            errorStr = rx.cap(1);
+        }else{
+            errorStr = "Unknow Error";
+        }
+        msgBox->setIcon(QMessageBox::Warning);
+        msgBox->setText(errorStr);
+        msgBox->setStandardButtons(QMessageBox::Ok);
+        msgBox->exec();
+    } else {
+        webRefresh();
+    }
 }

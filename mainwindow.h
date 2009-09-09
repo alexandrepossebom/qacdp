@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QtGui/QMainWindow>
+#include <QMessageBox>
 #include "acdp.h"
 
 namespace Ui
@@ -13,6 +14,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
     ACDP acdp;
+    QMessageBox *msgBox;
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
