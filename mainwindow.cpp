@@ -18,10 +18,22 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::send()
 {
+    bool ok = true;
     QString horas = ui->hoursLineEdit->text();
-    QString projectId = ui->projectBox->itemData(ui->projectBox->currentIndex()).toString();
-    QString description = ui->descriptionEdit->toPlainText();
-    acdp.send(projectId,horas,description);
+    int h = horas.toInt(&ok);
+    qDebug() << h ;
+    if(!ok || h < 1 || h > 24){
+        msgBox->setText("Invalid Hours field");
+        msgBox->setIcon(QMessageBox::Warning);
+        msgBox->setStandardButtons(QMessageBox::Ok);
+        msgBox->exec();
+
+        ui->hoursLineEdit->clear();
+    }else{
+        QString projectId = ui->projectBox->itemData(ui->projectBox->currentIndex()).toString();
+        QString description = ui->descriptionEdit->toPlainText();
+        acdp.send(projectId,horas,description);
+    }
 }
 
 void MainWindow::refresh(int year,int month)
