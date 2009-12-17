@@ -3,6 +3,7 @@
 
 #include <QtGui/QMainWindow>
 #include <QMessageBox>
+#include <QSettings>
 #include "acdp.h"
 
 namespace Ui

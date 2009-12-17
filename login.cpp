@@ -2,8 +2,8 @@
 #include "ui_login.h"
 
 Login::Login(QWidget *parent) :
-    QDialog(parent),
-    m_ui(new Ui::Login)
+        QDialog(parent),
+        m_ui(new Ui::Login)
 {
     m_ui->setupUi(this);
 }
@@ -16,6 +16,11 @@ Login::~Login()
 QString Login::userName()
 {
     return m_ui->loginLineEdit->text();
+}
+
+void Login::setUserName(QString username)
+{
+    m_ui->loginLineEdit->setText(username);
 }
 
 QString Login::pass()

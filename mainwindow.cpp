@@ -52,15 +52,20 @@ MainWindow::~MainWindow()
 void MainWindow::login()
 {
     Login l;
-
+    QSettings settings("Mandriva", "qacdp");
+    l.setUserName(settings.value("Acdp/UserName").toString());
     if (l.exec() != QDialog::Accepted)
         qApp->quit();
+
 
     QString userName = l.userName();
     QString pass = l.pass();
 
     if(userName.size() > 0 && pass.size() > 0)
+    {
+        settings.setValue("Acdp/UserName", userName);
         acdp.login(userName,pass,ui->nomeLabel,ui->projectBox,ui->webView,ui->calendarWidget,msgBox);
+    }
 }
 
 void MainWindow::clearDay()
