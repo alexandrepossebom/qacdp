@@ -132,6 +132,7 @@ void ACDP::send(QString project_id,QString horas,QString description)
     content.append("&");
     content.append("hours_desc=");
     content.append(QUrl::toPercentEncoding(description));
+    qDebug() << "" << QUrl::toPercentEncoding(description);
     content.append("&");
     content.append("date_day=");
 

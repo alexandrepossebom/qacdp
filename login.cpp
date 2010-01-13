@@ -6,6 +6,7 @@ Login::Login(QWidget *parent) :
         m_ui(new Ui::Login)
 {
     m_ui->setupUi(this);
+    m_ui->passwdLineEdit->setFocus();
 }
 
 Login::~Login()

@@ -29,6 +29,7 @@ private slots:
     void refresh(int year,int month);
 private:
     Ui::MainWindow *ui;
+    void htmlEncode(QString *text);
 };
 
 #endif // MAINWINDOW_H

@@ -46,6 +46,7 @@ void MainWindow::send()
     }else{
         QString projectId = ui->projectBox->itemData(ui->projectBox->currentIndex()).toString();
         QString description = ui->descriptionEdit->toPlainText();
+        htmlEncode(&description);
         acdp.send(projectId,horas,description);
     }
 }
@@ -110,4 +111,34 @@ void MainWindow::clear()
 void MainWindow::loginOk()
 {
     centralWidget()->setEnabled(true);
+}
+
+void MainWindow::htmlEncode(QString *text)
+{
+    text->replace(QString::fromUtf8("á"),"a");
+    text->replace(QString::fromUtf8("â"),"a");
+    text->replace(QString::fromUtf8("à"),"a");
+    text->replace(QString::fromUtf8("ã"),"a");
+    text->replace(QString::fromUtf8("ç"),"c");
+    text->replace(QString::fromUtf8("é"),"e");
+    text->replace(QString::fromUtf8("ê"),"e");
+    text->replace(QString::fromUtf8("í"),"i");
+    text->replace(QString::fromUtf8("ó"),"o");
+    text->replace(QString::fromUtf8("ô"),"o");
+    text->replace(QString::fromUtf8("õ"),"o");
+    text->replace(QString::fromUtf8("ú"),"u");
+    text->replace(QString::fromUtf8("ü"),"u");
+    text->replace(QString::fromUtf8("Á"),"A");
+    text->replace(QString::fromUtf8("Â"),"A");
+    text->replace(QString::fromUtf8("À"),"A");
+    text->replace(QString::fromUtf8("Ã"),"A");
+    text->replace(QString::fromUtf8("Ç"),"C");
+    text->replace(QString::fromUtf8("É"),"E");
+    text->replace(QString::fromUtf8("Ê"),"E");
+    text->replace(QString::fromUtf8("Í"),"I");
+    text->replace(QString::fromUtf8("Ó"),"O");
+    text->replace(QString::fromUtf8("Ô"),"O");
+    text->replace(QString::fromUtf8("Õ"),"O");
+    text->replace(QString::fromUtf8("Ú"),"U");
+    text->replace(QString::fromUtf8("Ü"),"U");
 }
