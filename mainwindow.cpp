@@ -5,9 +5,13 @@
 
 #include <QDate>
 
+#include <QDesktopWidget>
+#include <QApplication>
+
+
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow)
+    : QMainWindow(parent), ui(new Ui::MainWindow), acdp(this)
 {
     msgBox = new QMessageBox;
     ui->setupUi(this);
@@ -15,6 +19,16 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->clearButton,SIGNAL(clicked()),this,SLOT(clear()));
     connect(ui->clearDayButton,SIGNAL(clicked()),this,SLOT(clearDay()));
     connect(ui->calendarWidget,SIGNAL(currentPageChanged(int,int)),this,SLOT(refresh(int,int)));
+    centralWidget()->setEnabled(false);
+
+    ui->calendarWidget->setMaximumDate(QDate::currentDate());
+    ui->calendarWidget->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
+
+    QPoint center = qApp->desktop()->screenGeometry(this).center();
+
+    QRect r = rect();
+    r.moveCenter(center);
+    move(r.topLeft());
 }
 
 void MainWindow::send()
@@ -91,4 +105,9 @@ void MainWindow::clear()
 {
     ui->hoursLineEdit->clear();
     ui->descriptionEdit->clear();
+}
+
+void MainWindow::loginOk()
+{
+    centralWidget()->setEnabled(true);
 }

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>605</width>
-    <height>553</height>
+    <width>666</width>
+    <height>567</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -64,7 +64,10 @@
            <enum>Qt::Monday</enum>
           </property>
           <property name="horizontalHeaderFormat">
-           <enum>QCalendarWidget::SingleLetterDayNames</enum>
+           <enum>QCalendarWidget::ShortDayNames</enum>
+          </property>
+          <property name="verticalHeaderFormat">
+           <enum>QCalendarWidget::NoVerticalHeader</enum>
           </property>
          </widget>
         </item>
@@ -185,8 +188,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>605</width>
-     <height>24</height>
+     <width>666</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>

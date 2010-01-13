@@ -10,6 +10,8 @@
 #include <QWebView>
 #include <QMessageBox>
 
+class MainWindow;
+
 
 class ACDP : public QObject
 {
@@ -20,7 +22,6 @@ class ACDP : public QObject
     QHttp httpProjetos;
     QHttp httpSend;
     QHttp httpClear;
-    QString session;
     QDomDocument dom;
     QComboBox *projectBox;
     QString nome;
@@ -30,15 +31,15 @@ class ACDP : public QObject
     QCalendarWidget *calendar;
     QMessageBox *msgBox;
 
-
-
 public:
-    ACDP();
+    ACDP(MainWindow *win);
     void login(QString user, QString passwd, QLabel *nomeLabel, QComboBox *projectBox,
                QWebView *webview,QCalendarWidget *calendar, QMessageBox *msgBox);
     void send(QString project_id,QString horas,QString description);
     void webRefresh();
     void clearDay();
+    bool loginFinished;
+    QString session;
 
 private slots:
     bool loginDone(bool);
@@ -46,6 +47,8 @@ private slots:
     void projetosDone(bool);
     void sendDone(bool);
     void clearDone(bool);
+private:
+    MainWindow *m_win;
 
 };
 

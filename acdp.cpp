@@ -1,13 +1,16 @@
 #include "acdp.h"
+#include "mainwindow.h"
 #include <QDebug>
 #include <QUrl>
 #include <QDate>
 #include <QTimer>
 #include <QRegExp>
 
-ACDP::ACDP()
+ACDP::ACDP(MainWindow *win)
 {
+    m_win = win;
     projectBox = NULL;
+    loginFinished = false;
     connect(&httpLogin,SIGNAL(done(bool)),this,SLOT(loginDone(bool)));
     connect(&httpLogin, SIGNAL(responseHeaderReceived(const QHttpResponseHeader &)),
             this, SLOT(readResponseHeader(const QHttpResponseHeader &)));
@@ -98,7 +101,12 @@ void ACDP::readResponseHeader(const QHttpResponseHeader &responseHeader)
         msgBox->setText("Invalid user or password");
         msgBox->setStandardButtons(QMessageBox::Ok);
         msgBox->exec();
+        webview->setEnabled(false);
+        session = "error";
+        QTimer::singleShot(0, m_win, SLOT(login()));
+        return;
     }
+    m_win->loginOk();
 }
 
 void ACDP::send(QString project_id,QString horas,QString description)
@@ -138,7 +146,7 @@ void ACDP::send(QString project_id,QString horas,QString description)
     content.append("&");
     content.append("date_month=");
 
-     if(QString::number(date.month()).size() == 1)
+    if(QString::number(date.month()).size() == 1)
     {
         content.append("0");
         content.append(QString::number(date.month()));
@@ -166,6 +174,8 @@ void ACDP::send(QString project_id,QString horas,QString description)
 
 void ACDP::webRefresh()
 {
+    if(session.indexOf("error") == 0)
+        return;
 
     QDate date = calendar->selectedDate();
 
