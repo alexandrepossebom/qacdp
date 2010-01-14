@@ -5,6 +5,7 @@
 #include <QDate>
 #include <QTimer>
 #include <QRegExp>
+#include <QNetworkReply>
 
 ACDP::ACDP(MainWindow *win)
 {
@@ -17,6 +18,12 @@ ACDP::ACDP(MainWindow *win)
     connect(&httpProjetos,SIGNAL(done(bool)),this,SLOT(projetosDone(bool)));
     connect(&httpSend,SIGNAL(done(bool)),this,SLOT(sendDone(bool)));
     connect(&httpClear,SIGNAL(done(bool)),this,SLOT(clearDone(bool)));
+    connect(&httpLogin, SIGNAL(sslErrors(QList<QSslError>)),&httpLogin, SLOT(ignoreSslErrors()));
+    connect(&httpClear, SIGNAL(sslErrors(QList<QSslError>)),&httpClear, SLOT(ignoreSslErrors()));
+    connect(&httpSend, SIGNAL(sslErrors(QList<QSslError>)),&httpSend, SLOT(ignoreSslErrors()));
+    connect(&httpProjetos, SIGNAL(sslErrors(QList<QSslError>)),&httpProjetos, SLOT(ignoreSslErrors()));
+    connect(&httpWebView,SIGNAL(done(bool)),this,SLOT(webFinished(bool)));
+    connect(&httpWebView, SIGNAL(sslErrors(QList<QSslError>)),&httpWebView, SLOT(ignoreSslErrors()));
 }
 
 void ACDP::login(QString user,QString passwd,QLabel *nomeLabel, QComboBox *projectBox, QWebView *webview, QCalendarWidget *calendar,QMessageBox *msgBox)
@@ -37,12 +44,16 @@ void ACDP::login(QString user,QString passwd,QLabel *nomeLabel, QComboBox *proje
 
 
     QHttpRequestHeader header("POST", "/acdp/login.php");
-    header.setValue("Host", "ep.conectiva");
+    header.setValue("Host", "acdp.mandriva.com.br");
     header.setContentType("application/x-www-form-urlencoded");
     header.setContentLength(content.length());
 
-    httpLogin.setHost("ep.conectiva");
+    httpLogin.ignoreSslErrors();
+
+    httpLogin.setHost("acdp.mandriva.com.br",QHttp::ConnectionModeHttps);
+
     httpLogin.request(header, content);
+
 }
 
 bool ACDP::loginDone(bool error)
@@ -54,11 +65,11 @@ bool ACDP::loginDone(bool error)
         content.append(session);
 
         QHttpRequestHeader header("POST", "/acdp/horas_projeto.php");
-        header.setValue("Host", "ep.conectiva");
+        header.setValue("Host", "acdp.mandriva.com.br");
         header.setContentType("application/x-www-form-urlencoded");
         header.setContentLength(content.length());
 
-        httpProjetos.setHost("ep.conectiva");
+        httpProjetos.setHost("acdp.mandriva.com.br",QHttp::ConnectionModeHttps);
         httpProjetos.request(header, content);
 
         webRefresh();
@@ -132,7 +143,6 @@ void ACDP::send(QString project_id,QString horas,QString description)
     content.append("&");
     content.append("hours_desc=");
     content.append(QUrl::toPercentEncoding(description));
-    qDebug() << "" << QUrl::toPercentEncoding(description);
     content.append("&");
     content.append("date_day=");
 
@@ -165,11 +175,11 @@ void ACDP::send(QString project_id,QString horas,QString description)
     url.append(project_id);
 
     QHttpRequestHeader header("POST", url);
-    header.setValue("Host", "ep.conectiva");
+    header.setValue("Host", "acdp.mandriva.com.br");
     header.setContentType("application/x-www-form-urlencoded");
     header.setContentLength(content.length());
 
-    httpSend.setHost("ep.conectiva");
+    httpSend.setHost("acdp.mandriva.com.br",QHttp::ConnectionModeHttps);
     httpSend.request(header, content);
 }
 
@@ -180,7 +190,7 @@ void ACDP::webRefresh()
 
     QDate date = calendar->selectedDate();
 
-    QString urlString = "http://ep.conectiva/acdp/";
+    QString urlString = "https://acdp.mandriva.com.br/acdp/";
 
     urlString.append("relatorio.php?action=personal_month2&detailed=&person_id=");
     urlString.append(id);
@@ -203,8 +213,19 @@ void ACDP::webRefresh()
 
     urlString.append("&");
     urlString.append(session);
-    QUrl url = QUrl(urlString);
-    webview->setUrl(url);
+    qDebug() << urlString;
+
+    QHttpRequestHeader header("GET", urlString);
+    header.setValue("Host", "acdp.mandriva.com.br");
+    httpWebView.setHost("acdp.mandriva.com.br",QHttp::ConnectionModeHttps);
+    httpWebView.request(header);
+}
+
+void ACDP::webFinished(bool error)
+{
+    if (error) return;
+    QString html(httpWebView.readAll());
+    webview->setHtml(html);
     webview->setDisabled(true);
 }
 
@@ -235,7 +256,7 @@ void ACDP::clearDay()
 {
     QDate date = calendar->selectedDate();
 
-    QByteArray content = "http://ep.conectiva/acdp/";
+    QByteArray content = "http://acdp.mandriva.com.br/acdp/";
 
     content.append("horas_projeto.php?action=remove_all&year=");
 
@@ -266,11 +287,11 @@ void ACDP::clearDay()
 
 
     QHttpRequestHeader header("POST", content);
-    header.setValue("Host", "ep.conectiva");
+    header.setValue("Host", "acdp.mandriva.com.br");
     header.setContentType("application/x-www-form-urlencoded");
     header.setContentLength(content.length());
 
-    httpClear.setHost("ep.conectiva");
+    httpClear.setHost("acdp.mandriva.com.br",QHttp::ConnectionModeHttps);
     httpClear.request(header, content);
 }
 

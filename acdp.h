@@ -21,6 +21,7 @@ class ACDP : public QObject
     QHttp httpLogin;
     QHttp httpProjetos;
     QHttp httpSend;
+    QHttp httpWebView;
     QHttp httpClear;
     QDomDocument dom;
     QComboBox *projectBox;
@@ -47,6 +48,7 @@ private slots:
     void projetosDone(bool);
     void sendDone(bool);
     void clearDone(bool);
+    void webFinished(bool);
 private:
     MainWindow *m_win;
 
