@@ -43,8 +43,8 @@ public:
     QString session;
 
 private slots:
-    bool loginDone(bool);
-    void readResponseHeader(const QHttpResponseHeader&);
+    void loginDone(bool);
+    void loginHeader(const QHttpResponseHeader&);
     void projetosDone(bool);
     void sendDone(bool);
     void clearDone(bool);

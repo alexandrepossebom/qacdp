@@ -15,7 +15,7 @@ ACDP::ACDP(MainWindow *win)
     loginFinished = false;
     connect(&httpLogin,SIGNAL(done(bool)),this,SLOT(loginDone(bool)));
     connect(&httpLogin, SIGNAL(responseHeaderReceived(const QHttpResponseHeader &)),
-            this, SLOT(readResponseHeader(const QHttpResponseHeader &)));
+            this, SLOT(loginHeader(const QHttpResponseHeader &)));
     connect(&httpProjetos,SIGNAL(done(bool)),this,SLOT(projetosDone(bool)));
     connect(&httpSend,SIGNAL(done(bool)),this,SLOT(sendDone(bool)));
     connect(&httpClear,SIGNAL(done(bool)),this,SLOT(clearDone(bool)));
@@ -43,67 +43,60 @@ void ACDP::login(QString user,QString passwd,QLabel *nomeLabel, QComboBox *proje
     content.append("&passwd=");
     content.append(passwd);
 
-
     QHttpRequestHeader header("POST", "/acdp/login.php");
     header.setValue("Host", "acdp.mandriva.com.br");
     header.setContentType("application/x-www-form-urlencoded");
     header.setContentLength(content.length());
 
-
     httpLogin.setHost(DEFAULT_HOST,QHttp::ConnectionModeHttps);
-
     httpLogin.request(header, content);
 
 }
 
-bool ACDP::loginDone(bool error)
+void ACDP::loginDone(bool error)
 {
-    if(!error){
-        QByteArray content = "";
-        content.append("xml=true");
-        content.append("&");
-        content.append(session);
+    if(error) return;
+    QByteArray content = "";
+    content.append("xml=true");
+    content.append("&");
+    content.append(session);
 
-        QHttpRequestHeader header("POST", "/acdp/horas_projeto.php");
-        header.setValue("Host", "acdp.mandriva.com.br");
-        header.setContentType("application/x-www-form-urlencoded");
-        header.setContentLength(content.length());
+    QHttpRequestHeader header("POST", "/acdp/horas_projeto.php");
+    header.setValue("Host", "acdp.mandriva.com.br");
+    header.setContentType("application/x-www-form-urlencoded");
+    header.setContentLength(content.length());
 
-        httpProjetos.setHost(DEFAULT_HOST,QHttp::ConnectionModeHttps);
-        httpProjetos.request(header, content);
+    httpProjetos.setHost(DEFAULT_HOST,QHttp::ConnectionModeHttps);
+    httpProjetos.request(header, content);
 
-        webRefresh();
-        return true;
-    }
-    return false;
+    webRefresh();
 }
 
 void ACDP::projetosDone(bool error)
 {
-    if(!error){
-        dom.setContent(httpProjetos.readAll());
-        QDomElement element = dom.documentElement();
-        
-        QVariant projetoId("9");
-        QString projetoString = "Internal Hours";
-        projectBox->addItem(projetoString,projetoId);
+    if(error) return;
+    dom.setContent(httpProjetos.readAll());
+    QDomElement element = dom.documentElement();
 
-        for(QDomNode n = element.firstChild(); !n.isNull(); n = n.nextSibling())
-        {
-            QVariant projetoId(n.toElement().firstChildElement("code").text());
-            QString projetoString = n.toElement().firstChildElement("cliente").text();
-            projetoString.append(" - ");
-            projetoString.append(n.toElement().firstChildElement("title").text());
-            projectBox->addItem(projetoString,projetoId);
-            id = n.toElement().firstChildElement("person_id").text();
-            nome = n.toElement().firstChildElement("person_name").text();
-        }
-        if(nome.size() > 0)
-            nomeLabel->setText(nome);
+    QVariant projetoId("9");
+    QString projetoString = "Internal Hours";
+    projectBox->addItem(projetoString,projetoId);
+
+    for(QDomNode n = element.firstChild(); !n.isNull(); n = n.nextSibling())
+    {
+        QVariant projetoId(n.toElement().firstChildElement("code").text());
+        QString projetoString = n.toElement().firstChildElement("cliente").text();
+        projetoString.append(" - ");
+        projetoString.append(n.toElement().firstChildElement("title").text());
+        projectBox->addItem(projetoString,projetoId);
+        id = n.toElement().firstChildElement("person_id").text();
+        nome = n.toElement().firstChildElement("person_name").text();
     }
+    if(nome.size() > 0)
+        nomeLabel->setText(nome);
 }
 
-void ACDP::readResponseHeader(const QHttpResponseHeader &responseHeader)
+void ACDP::loginHeader(const QHttpResponseHeader &responseHeader)
 {
     session = responseHeader.value("set-cookie").section(";",0,0);
     if( responseHeader.toString().indexOf("location") == -1 )
