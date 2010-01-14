@@ -5,7 +5,8 @@
 #include <QDate>
 #include <QTimer>
 #include <QRegExp>
-#include <QNetworkReply>
+
+const QString DEFAULT_HOST = "acdp.mandriva.com.br";
 
 ACDP::ACDP(MainWindow *win)
 {
@@ -48,9 +49,8 @@ void ACDP::login(QString user,QString passwd,QLabel *nomeLabel, QComboBox *proje
     header.setContentType("application/x-www-form-urlencoded");
     header.setContentLength(content.length());
 
-    httpLogin.ignoreSslErrors();
 
-    httpLogin.setHost("acdp.mandriva.com.br",QHttp::ConnectionModeHttps);
+    httpLogin.setHost(DEFAULT_HOST,QHttp::ConnectionModeHttps);
 
     httpLogin.request(header, content);
 
@@ -69,7 +69,7 @@ bool ACDP::loginDone(bool error)
         header.setContentType("application/x-www-form-urlencoded");
         header.setContentLength(content.length());
 
-        httpProjetos.setHost("acdp.mandriva.com.br",QHttp::ConnectionModeHttps);
+        httpProjetos.setHost(DEFAULT_HOST,QHttp::ConnectionModeHttps);
         httpProjetos.request(header, content);
 
         webRefresh();
@@ -179,7 +179,7 @@ void ACDP::send(QString project_id,QString horas,QString description)
     header.setContentType("application/x-www-form-urlencoded");
     header.setContentLength(content.length());
 
-    httpSend.setHost("acdp.mandriva.com.br",QHttp::ConnectionModeHttps);
+    httpSend.setHost(DEFAULT_HOST,QHttp::ConnectionModeHttps);
     httpSend.request(header, content);
 }
 
@@ -213,11 +213,10 @@ void ACDP::webRefresh()
 
     urlString.append("&");
     urlString.append(session);
-    qDebug() << urlString;
 
     QHttpRequestHeader header("GET", urlString);
-    header.setValue("Host", "acdp.mandriva.com.br");
-    httpWebView.setHost("acdp.mandriva.com.br",QHttp::ConnectionModeHttps);
+    header.setValue("Host", DEFAULT_HOST);
+    httpWebView.setHost(DEFAULT_HOST,QHttp::ConnectionModeHttps);
     httpWebView.request(header);
 }
 
@@ -291,7 +290,7 @@ void ACDP::clearDay()
     header.setContentType("application/x-www-form-urlencoded");
     header.setContentLength(content.length());
 
-    httpClear.setHost("acdp.mandriva.com.br",QHttp::ConnectionModeHttps);
+    httpClear.setHost(DEFAULT_HOST,QHttp::ConnectionModeHttps);
     httpClear.request(header, content);
 }
 
