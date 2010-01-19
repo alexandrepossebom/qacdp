@@ -28,7 +28,6 @@ class ACDP : public QObject
     QString nome;
 
     QLabel *nomeLabel;
-    QWebView *webview;
     QCalendarWidget *calendar;
     QMessageBox *msgBox;
     GetCalendarTips gct;
@@ -36,7 +35,7 @@ class ACDP : public QObject
 public:
     ACDP(MainWindow *win);
     void login(QString user, QString passwd, QLabel *nomeLabel, QComboBox *projectBox,
-               QWebView *webview,QCalendarWidget *calendar, QMessageBox *msgBox);
+               QCalendarWidget *calendar, QMessageBox *msgBox);
     void send(QString project_id,QString horas,QString description);
     void webRefresh();
     void clearDay();
@@ -51,7 +50,6 @@ private slots:
     void projetosDone(bool);
     void sendDone(bool);
     void clearDone(bool);
-    void webFinished(bool);
 
 private:
     MainWindow *m_win;

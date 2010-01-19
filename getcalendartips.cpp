@@ -45,17 +45,17 @@ void GetCalendarTips::update(QString text,QDate date){
         text = "No entries";
     }
 
-    fmt.setBackground( brush );
+    fmt.setBackground( brush );    
     fmt.setToolTip( text );
     calendar->setDateTextFormat( date, fmt );
     jobsDone.append(date);
 }
 
-void GetCalendarTips::enqueueJob(const QDate &date)
+void GetCalendarTips::enqueueJob(const QDate &date,bool force)
 {
-    if(!jobsDone.contains(date))
+    if(!jobsDone.contains(date) || force)
     {
-        if(!jobs.contains(date))
+        if(!jobs.contains(date) || force)
         {
             jobs.enqueue(date);
         }

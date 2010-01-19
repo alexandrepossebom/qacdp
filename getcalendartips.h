@@ -27,7 +27,7 @@ public slots:
 
 public:
     GetCalendarTips();
-    void enqueueJob(const QDate &date);
+    void enqueueJob(const QDate &date,bool force=false);
     void setCalendar(QCalendarWidget *cal,QString &session,QString &id);
     QDate dequeueJob();
     void startProcessing();

@@ -24,17 +24,14 @@ ACDP::ACDP(MainWindow *win)
     connect(&httpClear, SIGNAL(sslErrors(QList<QSslError>)),&httpClear, SLOT(ignoreSslErrors()));
     connect(&httpSend, SIGNAL(sslErrors(QList<QSslError>)),&httpSend, SLOT(ignoreSslErrors()));
     connect(&httpProjetos, SIGNAL(sslErrors(QList<QSslError>)),&httpProjetos, SLOT(ignoreSslErrors()));
-    connect(&httpWebView,SIGNAL(done(bool)),this,SLOT(webFinished(bool)));
-    connect(&httpWebView, SIGNAL(sslErrors(QList<QSslError>)),&httpWebView, SLOT(ignoreSslErrors()));
 }
 
-void ACDP::login(QString user,QString passwd,QLabel *nomeLabel, QComboBox *projectBox, QWebView *webview, QCalendarWidget *calendar,QMessageBox *msgBox)
+void ACDP::login(QString user,QString passwd,QLabel *nomeLabel, QComboBox *projectBox, QCalendarWidget *calendar,QMessageBox *msgBox)
 {
     this->user = user;
     this->passwd = passwd;
     this->projectBox = projectBox;
     this->nomeLabel = nomeLabel;
-    this->webview = webview;
     this->calendar = calendar;
     this->msgBox = msgBox;
 
@@ -119,7 +116,6 @@ void ACDP::loginHeader(const QHttpResponseHeader &responseHeader)
         msgBox->setText("Invalid user or password");
         msgBox->setStandardButtons(QMessageBox::Ok);
         msgBox->exec();
-        webview->setEnabled(false);
         session = "error";
         QTimer::singleShot(0, m_win, SLOT(login()));
         return;
@@ -194,47 +190,8 @@ void ACDP::webRefresh()
 {
     if(session.indexOf("error") == 0)
         return;
-
     QDate date = calendar->selectedDate();
-
-    updateCalendar(date.month(),date.year());
-
-    QString urlString = "https://acdp.mandriva.com.br/acdp/";
-
-    urlString.append("relatorio.php?action=personal_month2&detailed=&person_id=");
-    urlString.append(id);
-    urlString.append("&year=2009&month=10");
-
-    urlString.append("&");
-    urlString.append("year=");
-    urlString.append(QString::number(date.year()));
-
-    urlString.append("&");
-    urlString.append("month=");
-
-    if(QString::number(date.month()).size() == 1)
-    {
-        urlString.append("0");
-        urlString.append(QString::number(date.month()));
-    }else{
-        urlString.append(QString::number(date.month()));
-    }
-
-    urlString.append("&");
-    urlString.append(session);
-
-    QHttpRequestHeader header("GET", urlString);
-    header.setValue("Host", DEFAULT_HOST);
-    httpWebView.setHost(DEFAULT_HOST,QHttp::ConnectionModeHttps);
-    httpWebView.request(header);
-}
-
-void ACDP::webFinished(bool error)
-{
-    if (error) return;
-    QString html(httpWebView.readAll());
-    webview->setHtml(html);
-    webview->setDisabled(true);
+    updateCalendar(date.month(),date.year()); 
 }
 
 void ACDP::sendDone(bool error)
@@ -256,8 +213,8 @@ void ACDP::sendDone(bool error)
         msgBox->setStandardButtons(QMessageBox::Ok);
         msgBox->exec();
     } else {
-        webRefresh();
-        gct.enqueueJob(calendar->selectedDate());
+        gct.enqueueJob(calendar->selectedDate(),true);
+        gct.startProcessing();
     }
 }
 
@@ -306,6 +263,8 @@ void ACDP::clearDay()
 
 void ACDP::clearDone(bool error)
 {
-    if (!error)
-        webRefresh();
+    if (error)
+        return;
+    gct.enqueueJob(calendar->selectedDate(),true);
+    gct.startProcessing();
 }

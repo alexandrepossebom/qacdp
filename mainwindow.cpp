@@ -82,7 +82,7 @@ void MainWindow::login()
             settings.setValue("Acdp/Password", pass);
         else
             settings.remove("Acdp/Password");
-        acdp.login(userName,pass,ui->nomeLabel,ui->projectBox,ui->webView,ui->calendarWidget,msgBox);
+        acdp.login(userName,pass,ui->nomeLabel,ui->projectBox,ui->calendarWidget,msgBox);
     }
 }
 
