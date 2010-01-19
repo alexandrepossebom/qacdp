@@ -8,12 +8,14 @@ set (qacdp_SOURCES
     acdp.cpp
     login.cpp
     main.cpp
+    getcalendartips.cpp
     mainwindow.cpp
     )
 
 set(SOURCES_H
     acdp.h
     login.h
+	 getcalendartips.h
     mainwindow.h)
 qt4_wrap_cpp(qacdp_MOCS ${SOURCES_H})
 

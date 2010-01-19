@@ -1,10 +1,11 @@
 #include "acdp.h"
-#include "mainwindow.h"
+
 #include <QDebug>
 #include <QUrl>
 #include <QDate>
 #include <QTimer>
 #include <QRegExp>
+#include "mainwindow.h"
 
 const QString DEFAULT_HOST = "acdp.mandriva.com.br";
 
@@ -37,6 +38,7 @@ void ACDP::login(QString user,QString passwd,QLabel *nomeLabel, QComboBox *proje
     this->calendar = calendar;
     this->msgBox = msgBox;
 
+
     QByteArray content = "";
     content.append("action=login&GoAheadAndLogIn=Login&user=");
     content.append(user);
@@ -51,6 +53,17 @@ void ACDP::login(QString user,QString passwd,QLabel *nomeLabel, QComboBox *proje
     httpLogin.setHost(DEFAULT_HOST,QHttp::ConnectionModeHttps);
     httpLogin.request(header, content);
 
+}
+void ACDP::updateCalendar(int month, int year)
+{
+    gct.setCalendar(calendar,session,id);
+    for(int i=1;i<=31;i++)
+    {
+        QDate date;
+        date.setDate(year,month,i);
+        if (date.isValid() && date.operator <=(QDate::currentDate()))
+            gct.enqueueJob(date);
+    }
 }
 
 void ACDP::loginDone(bool error)
@@ -183,6 +196,8 @@ void ACDP::webRefresh()
 
     QDate date = calendar->selectedDate();
 
+    updateCalendar(date.month(),date.year());
+
     QString urlString = "https://acdp.mandriva.com.br/acdp/";
 
     urlString.append("relatorio.php?action=personal_month2&detailed=&person_id=");
@@ -241,6 +256,7 @@ void ACDP::sendDone(bool error)
         msgBox->exec();
     } else {
         webRefresh();
+        gct.enqueueJob(calendar->selectedDate());
     }
 }
 

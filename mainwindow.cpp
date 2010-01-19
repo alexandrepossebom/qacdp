@@ -41,7 +41,6 @@ void MainWindow::send()
         msgBox->setIcon(QMessageBox::Warning);
         msgBox->setStandardButtons(QMessageBox::Ok);
         msgBox->exec();
-
         ui->hoursLineEdit->clear();
     }else{
         QString projectId = ui->projectBox->itemData(ui->projectBox->currentIndex()).toString();
@@ -71,7 +70,6 @@ void MainWindow::login()
     l.setUserName(settings.value("Acdp/UserName").toString());
     if (l.exec() != QDialog::Accepted)
         qApp->quit();
-
 
     QString userName = l.userName();
     QString pass = l.pass();

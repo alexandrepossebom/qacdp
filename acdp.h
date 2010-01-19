@@ -9,9 +9,9 @@
 #include <QCalendarWidget>
 #include <QWebView>
 #include <QMessageBox>
+#include "getcalendartips.h"
 
 class MainWindow;
-
 
 class ACDP : public QObject
 {
@@ -26,11 +26,12 @@ class ACDP : public QObject
     QDomDocument dom;
     QComboBox *projectBox;
     QString nome;
-    QString id;
+
     QLabel *nomeLabel;
     QWebView *webview;
     QCalendarWidget *calendar;
     QMessageBox *msgBox;
+    GetCalendarTips gct;
 
 public:
     ACDP(MainWindow *win);
@@ -41,6 +42,8 @@ public:
     void clearDay();
     bool loginFinished;
     QString session;
+    QString id;
+    void updateCalendar(int month,int year);
 
 private slots:
     void loginDone(bool);
@@ -49,9 +52,11 @@ private slots:
     void sendDone(bool);
     void clearDone(bool);
     void webFinished(bool);
+
 private:
     MainWindow *m_win;
 
 };
+
 
 #endif // ACDP_H

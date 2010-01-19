@@ -14,21 +14,24 @@ namespace Ui
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+    Ui::MainWindow *ui;
     ACDP acdp;
     QMessageBox *msgBox;
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void loginOk();
+
 public slots:
     void login();
+
 private slots:
     void send();
     void clear();
     void clearDay();
     void refresh(int year,int month);
 private:
-    Ui::MainWindow *ui;
+
     void htmlEncode(QString *text);
 };
 
