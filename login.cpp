@@ -6,6 +6,7 @@ Login::Login(QWidget *parent) :
         m_ui(new Ui::Login)
 {
     m_ui->setupUi(this);
+    m_ui->checkBoxSavePass->setChecked(true);
     m_ui->passwdLineEdit->setFocus();
 }
 
@@ -24,9 +25,21 @@ void Login::setUserName(QString username)
     m_ui->loginLineEdit->setText(username);
 }
 
+void Login::setPass(QString pass)
+{
+    if(pass.length() > 0)
+        m_ui->buttonBox->setFocus();
+    m_ui->passwdLineEdit->setText(pass);
+}
+
 QString Login::pass()
 {
     return m_ui->passwdLineEdit->text();
+}
+
+bool Login::savePass()
+{
+    return m_ui->checkBoxSavePass->isChecked();
 }
 
 void Login::changeEvent(QEvent *e)

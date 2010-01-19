@@ -16,6 +16,8 @@ public:
     QString userName();
     QString pass();
     void setUserName(QString username);
+    void setPass(QString pass);
+    bool savePass();
 
 protected:
     void changeEvent(QEvent *e);

@@ -68,6 +68,7 @@ void MainWindow::login()
     Login l;
     QSettings settings("Mandriva", "qacdp");
     l.setUserName(settings.value("Acdp/UserName").toString());
+    l.setPass(settings.value("Acdp/Password").toString());
     if (l.exec() != QDialog::Accepted)
         qApp->quit();
 
@@ -77,6 +78,10 @@ void MainWindow::login()
     if(userName.size() > 0 && pass.size() > 0)
     {
         settings.setValue("Acdp/UserName", userName);
+        if(l.savePass())
+            settings.setValue("Acdp/Password", pass);
+        else
+            settings.remove("Acdp/Password");
         acdp.login(userName,pass,ui->nomeLabel,ui->projectBox,ui->webView,ui->calendarWidget,msgBox);
     }
 }
