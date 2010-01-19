@@ -10,10 +10,12 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     acdp.cpp \
     login.cpp \
-    getcalendartips.cpp
+    getcalendartips.cpp \
+    calendarthread.cpp
 HEADERS += mainwindow.h \
     acdp.h \
     login.h \
-    getcalendartips.h
+    getcalendartips.h \
+    calendarthread.h
 FORMS += mainwindow.ui \
     login.ui

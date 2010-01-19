@@ -2,6 +2,7 @@
 #define GETCALENDARTIPS_H
 
 #include <QObject>
+#include "calendarthread.h"
 #include <QHttp>
 #include <QUrl>
 #include <QDebug>
@@ -9,28 +10,27 @@
 #include <QTimer>
 #include <QDate>
 #include <QCalendarWidget>
+#include <QMutex>
 
 class GetCalendarTips : public QObject
 {
     Q_OBJECT
-    QHttp http;
-    QTimer timer;
-    QDate currentDate;
+    QList<CalendarThread*> calendarThreads;
     QCalendarWidget *calendar;
     QString session;
     QString id;
-    int interval;
-    bool done;
     QList<QDate> jobsDone;
     QQueue<QDate> jobs;
+    QMutex mutex;
 public slots:
-    void slotProcessQueue();
-    void update(bool error);
+    void update(QString text,QDate date);
 
 public:
     GetCalendarTips();
     void enqueueJob(const QDate &date);
     void setCalendar(QCalendarWidget *cal,QString &session,QString &id);
+    QDate dequeueJob();
+    void startProcessing();
 };
 
 #endif // GETCALENDARTIPS_H

@@ -64,6 +64,7 @@ void ACDP::updateCalendar(int month, int year)
         if (date.isValid() && date.operator <=(QDate::currentDate()))
             gct.enqueueJob(date);
     }
+    gct.startProcessing();
 }
 
 void ACDP::loginDone(bool error)

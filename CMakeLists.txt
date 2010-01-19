@@ -9,6 +9,7 @@ set (qacdp_SOURCES
     login.cpp
     main.cpp
     getcalendartips.cpp
+	 calendarthread.cpp
     mainwindow.cpp
     )
 
@@ -16,6 +17,7 @@ set(SOURCES_H
     acdp.h
     login.h
 	 getcalendartips.h
+	 calendarthread.h
     mainwindow.h)
 qt4_wrap_cpp(qacdp_MOCS ${SOURCES_H})
 
