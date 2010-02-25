@@ -179,6 +179,13 @@
       </item>
      </layout>
     </item>
+    <item>
+     <widget class="QLabel" name="statusLog">
+      <property name="text">
+       <string></string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">

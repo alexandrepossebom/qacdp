@@ -46,6 +46,13 @@ void MainWindow::send()
         QString projectId = ui->projectBox->itemData(ui->projectBox->currentIndex()).toString();
         QString description = ui->descriptionEdit->toPlainText();
         htmlEncode(&description);
+        QString shortDescription = description;
+        if (description.length() > 30) {
+            shortDescription.truncate(30);
+            shortDescription += "...";
+        }
+        QString str = QString("Added %1 hours to %2 (%3)").arg(horas).arg(ui->projectBox->currentText()).arg(shortDescription);
+        ui->statusLog->setText(str);
         acdp.send(projectId,horas,description);
     }
 }

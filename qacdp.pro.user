@@ -138,7 +138,7 @@
     <value type="QString">NLSPATH=/usr/share/locale/%l/%N</value>
     <value type="QString">PATH=/usr/lib/qt4/bin:/usr/lib/icecc/bin:/usr/bin:/bin:/usr/local/bin:/usr/X11R6/bin/:/usr/games:/usr/lib/qt4/bin:/home/alexandre/bin</value>
     <value type="QString">PULSE_PROP_media.role=none</value>
-    <value type="QString">PULSE_PROP_phonon.streamid={23947616-c636-4959-b121-2a63b2268539}</value>
+    <value type="QString">PULSE_PROP_phonon.streamid={d8e880a4-a2d5-4c78-bb6d-35376bd554be}</value>
     <value type="QString">PWD=/home/alexandre</value>
     <value type="QString">PYTHONDONTWRITEBYTECODE=1</value>
     <value type="QString">PYTHONPATH=/usr/lib/ooo/basis-link/program</value>
@@ -247,7 +247,7 @@
     <value type="QString">NLSPATH=/usr/share/locale/%l/%N</value>
     <value type="QString">PATH=/usr/lib/qt4/bin:/usr/lib/icecc/bin:/usr/bin:/bin:/usr/local/bin:/usr/X11R6/bin/:/usr/games:/usr/lib/qt4/bin:/home/alexandre/bin</value>
     <value type="QString">PULSE_PROP_media.role=none</value>
-    <value type="QString">PULSE_PROP_phonon.streamid={23947616-c636-4959-b121-2a63b2268539}</value>
+    <value type="QString">PULSE_PROP_phonon.streamid={d8e880a4-a2d5-4c78-bb6d-35376bd554be}</value>
     <value type="QString">PWD=/home/alexandre</value>
     <value type="QString">PYTHONDONTWRITEBYTECODE=1</value>
     <value type="QString">PYTHONPATH=/usr/lib/ooo/basis-link/program</value>
