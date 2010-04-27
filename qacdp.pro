@@ -11,11 +11,14 @@ SOURCES += main.cpp \
     acdp.cpp \
     login.cpp \
     getcalendartips.cpp \
-    calendarthread.cpp
+    calendarthread.cpp \
+    overtimedialog.cpp
 HEADERS += mainwindow.h \
     acdp.h \
     login.h \
     getcalendartips.h \
-    calendarthread.h
+    calendarthread.h \
+    overtimedialog.h
 FORMS += mainwindow.ui \
-    login.ui
+    login.ui \
+    overtimedialog.ui

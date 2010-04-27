@@ -177,12 +177,19 @@
         </property>
        </spacer>
       </item>
+      <item>
+       <widget class="QPushButton" name="overtimeButton">
+        <property name="text">
+         <string>Calc Overtime</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item>
      <widget class="QLabel" name="statusLog">
       <property name="text">
-       <string></string>
+       <string/>
       </property>
      </widget>
     </item>

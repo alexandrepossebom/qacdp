@@ -11,6 +11,7 @@ set (qacdp_SOURCES
     getcalendartips.cpp
 	 calendarthread.cpp
     mainwindow.cpp
+	 overtimedialog.cpp
     )
 
 set(SOURCES_H
@@ -18,10 +19,11 @@ set(SOURCES_H
     login.h
 	 getcalendartips.h
 	 calendarthread.h
+	 overtimedialog.h
     mainwindow.h)
 qt4_wrap_cpp(qacdp_MOCS ${SOURCES_H})
 
-set(qacdp_UI login.ui mainwindow.ui)
+set(qacdp_UI login.ui mainwindow.ui overtimedialog.ui)
 qt4_wrap_ui(qacdp_UI_SRCS ${qacdp_UI})
 add_executable(qacdp ${qacdp_SOURCES} ${qacdp_UI_SRCS} ${qacdp_MOCS})
 

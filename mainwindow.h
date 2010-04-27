@@ -30,8 +30,10 @@ private slots:
     void clear();
     void clearDay();
     void refresh(int year,int month);
+    void calcOvertimeSlot();
 private:
-
+    int overtimefull;
+    int overtimehalf;
     void htmlEncode(QString *text);
 };
 

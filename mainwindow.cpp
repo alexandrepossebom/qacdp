@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "login.h"
+#include "overtimedialog.h"
 #include <QDebug>
 
 #include <QDate>
@@ -15,10 +16,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     msgBox = new QMessageBox;
     ui->setupUi(this);
+
+    overtimefull = 0;
+    overtimehalf = 0;
     connect(ui->sendButton,SIGNAL(clicked()),this,SLOT(send()));
     connect(ui->clearButton,SIGNAL(clicked()),this,SLOT(clear()));
     connect(ui->clearDayButton,SIGNAL(clicked()),this,SLOT(clearDay()));
     connect(ui->calendarWidget,SIGNAL(currentPageChanged(int,int)),this,SLOT(refresh(int,int)));
+    connect(ui->overtimeButton,SIGNAL(clicked()),this,SLOT(calcOvertimeSlot()));
     centralWidget()->setEnabled(false);
 
     ui->calendarWidget->setMaximumDate(QDate::currentDate());
@@ -29,6 +34,57 @@ MainWindow::MainWindow(QWidget *parent)
     QRect r = rect();
     r.moveCenter(center);
     move(r.topLeft());
+}
+
+void MainWindow::calcOvertimeSlot()
+{
+    overtimefull = 0;
+    overtimehalf = 0;
+    int defaultDay = ui->calendarWidget->selectedDate().day();
+    int month = ui->calendarWidget->selectedDate().month();
+    int year = ui->calendarWidget->selectedDate().year();
+
+    int horas = 0;
+
+    for(int i=1;i<=31;i++)
+    {
+        QDate date;
+        date.setDate(year,month,i);
+        if (date.isValid() && date.operator <=(QDate::currentDate()))
+        {
+            horas = 0;
+            QString data = ui->calendarWidget->dateTextFormat(date).property(8228).toString();
+
+            QRegExp rx("<td align=\"left\"><b>([0-9]+)</b></td>");
+
+            if (rx.indexIn(data) != -1) {
+                 horas = rx.cap(1).toInt();
+            }
+            if(date.dayOfWeek() == Qt::Sunday)
+                overtimefull += horas;
+            else if(date.dayOfWeek() == Qt::Saturday )
+                overtimehalf += horas;
+            else
+            {
+                if (horas > 8)
+                    overtimehalf += (horas - 8);
+            }
+        }
+
+    }
+
+    QSettings settings("Mandriva", "qacdp");
+    bool ok = true;
+    double salary = settings.value("Acdp/Salary").toDouble(&ok);
+    if(!ok)
+    {
+        salary = 0;
+    }
+    OvertimeDialog *ovtd = new OvertimeDialog(overtimefull,overtimehalf,salary,this);
+    if (ovtd->exec() == QDialog::Accepted)
+    {
+        settings.setValue("Acdp/Salary", ovtd->getSalary());
+    }
 }
 
 void MainWindow::send()
