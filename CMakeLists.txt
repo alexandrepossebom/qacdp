@@ -1,7 +1,6 @@
 cmake_minimum_required (VERSION 2.6)
 project (qacdp)
 find_package(Qt4 REQUIRED)
-find_package(Automoc4 REQUIRED)
 add_definitions(${QT_DEFINITIONS})
 include_directories(${QT_INCLUDES} ${CMAKE_BINARY_DIR} )
 set (qacdp_SOURCES
