@@ -11,6 +11,8 @@
 #include <QDate>
 #include <QCalendarWidget>
 #include <QMutex>
+#include <QSettings>
+#include <QCoreApplication>
 
 class GetCalendarTips : public QObject
 {
@@ -31,6 +33,10 @@ public:
     void setCalendar(QCalendarWidget *cal,QString &session,QString &id);
     QDate dequeueJob();
     void startProcessing();
+private:
+    void updateColors(const QDate &date,QString &text);
+    QSettings *settings;
+
 };
 
 #endif // GETCALENDARTIPS_H

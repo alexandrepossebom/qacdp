@@ -5,6 +5,7 @@
 #include <QDate>
 #include <QTimer>
 #include <QRegExp>
+#include <QTextFormat>
 #include "mainwindow.h"
 
 const QString DEFAULT_HOST = "acdp.mandriva.com.br";
@@ -188,7 +189,7 @@ void ACDP::send(QString project_id,QString horas,QString description)
 
 void ACDP::webRefresh()
 {
-    if(session.indexOf("error") == 0)
+    if(session.indexOf("error") == 0 || session.length() == 0)
         return;
     QDate date = calendar->selectedDate();
     updateCalendar(date.month(),date.year()); 

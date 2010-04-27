@@ -40,7 +40,6 @@ void MainWindow::calcOvertimeSlot()
 {
     overtimefull = 0;
     overtimehalf = 0;
-    int defaultDay = ui->calendarWidget->selectedDate().day();
     int month = ui->calendarWidget->selectedDate().month();
     int year = ui->calendarWidget->selectedDate().year();
 
@@ -118,6 +117,9 @@ void MainWindow::refresh(int year,int month)
     QDate date;
     date.setDate(year,month,ui->calendarWidget->selectedDate().day());
     ui->calendarWidget->setSelectedDate(date);
+
+
+
     acdp.webRefresh();
 }
 
@@ -147,6 +149,10 @@ void MainWindow::login()
             settings.remove("Acdp/Password");
         acdp.login(userName,pass,ui->nomeLabel,ui->projectBox,ui->calendarWidget,msgBox);
     }
+
+
+    refresh(ui->calendarWidget->selectedDate().year(),ui->calendarWidget->selectedDate().month());
+
 }
 
 void MainWindow::clearDay()
