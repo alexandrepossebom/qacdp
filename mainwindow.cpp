@@ -159,7 +159,7 @@ void MainWindow::clearDay()
 {
 
     msgBox->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    msgBox->setText("Remove all entries for thi day ?");
+    msgBox->setText("Remove all entries for this day ?");
     switch (msgBox->exec()) {
     case QMessageBox::Yes:
         acdp.clearDay();
